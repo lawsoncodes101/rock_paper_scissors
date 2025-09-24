@@ -2,7 +2,6 @@ const choices = ["rock", "paper", "scissors"]; // must be set to lowercase
 
 function getComputerChoice() {
     const index = Math.floor(Math.random() * 3);
-    // console.log(choices[index])
     return choices[index];
 }
 
@@ -22,7 +21,6 @@ function getHumanChoice() {
         }
         if (!count) return false;
     } while (!choices.includes(choice));
-    // console.log(choice)
     return choice;
 }
 
