@@ -1,42 +1,49 @@
 const buttons = document.querySelectorAll("button");
-
-for (let i = 0; i < buttons.length; i++){
-    buttons[i].addEventListener("click", (e) => {
-        let humanValue = e.target.textContent;
-        playRound(humanValue, getComputerChoice);
-    });
-};
+const playerChoiceDisplay = document.querySelector(".playerChoice");
+const computerChoiceDisplay = document.querySelector(".computerChoice")
+const playerScoreDisplay = document.querySelector(".playerScore");
+const computerScoreDisplay = document.querySelector(".computerScore");
+const winnerDisplay = document.querySelector(".winner");
+let playerScore = 0;
+let computerScore = 0;
 
 function getComputerChoice() {
+    const choices = ["rock", "paper", "scissors"];
     const index = Math.floor(Math.random() * 3);
     return choices[index];
 }
 
-let humanScore = 0;
-let computerScore = 0;
-
-function playRound(humanValue, computerChoice) {
+function playRound(playerValue, computerChoice) {
     let computerValue = computerChoice();
 
-    if (humanValue) {
+    if (playerValue) {
         let roundRules = {
             rock: "scissors",
             scissors: "paper",
             paper: "rock",
         };
+        
+        playerChoiceDisplay.textContent = playerValue;
+        computerChoiceDisplay.textContent = computerValue;
 
-        console.log(
-            `Player chose: ${humanValue} \nComputer chose: ${computerValue}`
-        );
-
-        if (humanValue === computerValue) {
-            console.log("Draw!");
-        } else if (roundRules[humanValue] === computerValue) {
-            console.log("Player Wins!");
-            humanScore += 1;
+        if (playerValue === computerValue) {
+            winnerDisplay.textContent = "It's a draw!";
+        } else if (roundRules[playerValue] === computerValue) {
+            playerScore += 1;
+            winnerDisplay.textContent = "Player Wins!";
         } else {
-            console.log("Computer Wins!");
             computerScore += 1;
+            winnerDisplay.textContent = "Computer Wins!";
         }
+        
+        playerScoreDisplay.textContent = playerScore;
+        computerScoreDisplay.textContent = computerScore;
     }
 }
+
+buttons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        let playerValue = e.target.id;
+        playRound(playerValue, getComputerChoice);
+    });
+})
